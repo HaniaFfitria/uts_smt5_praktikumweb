@@ -1,5 +1,3 @@
-@extends('posts.index')
-@section('content')
 
 <body style="background: lightgray">
     <div class="container mt-5">
@@ -28,4 +26,3 @@
     </div>
 </body>
 
-@endsection

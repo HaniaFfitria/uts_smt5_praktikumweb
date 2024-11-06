@@ -11,11 +11,10 @@ class PostController extends Controller
 {
     public function index()
     {
-        //get posts
-        $posts = Post::latest()->paginate(5);
-        //render view with posts
+        $posts = Post::paginate(10); // atau model Post lainnya
         return view('posts.index', compact('posts'));
     }
+
 
     public function create()
     {
@@ -46,6 +45,11 @@ Disimpan!']);
     public function edit(Post $post)
     {
         return view('posts.edit', compact('post'));
+    }
+    public function show(Post $post)
+    {
+     
+        return view('posts.show', compact('post'));
     }
     public function update(Request $request, Post $post)
     {
@@ -89,10 +93,5 @@ Disimpan!']);
         return redirect()->route('posts.index')->with(['success' => 'Data Berhasil
 Dihapus!']);
     }
-    public function show($id)
-    {
-        $post = Post::findOrFail($id); // Mengambil data post berdasarkan ID
-        return view('posts.show', compact('post'));
-    }
-    
+  
 }
