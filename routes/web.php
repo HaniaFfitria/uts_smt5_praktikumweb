@@ -3,18 +3,16 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-// Route resource tanpa array
-Route::resource('posts', PostController::class);
 
-Route::get('home', function () {
-    return view('home');
-})->middleware(['auth', 'verified'])->name('home');
+
+Route::get('dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 // Pastikan tidak ada duplikasi route untuk 'posts.index' dan 'posts.show'
 Route::middleware('auth')->group(function () {
@@ -23,4 +21,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/posts/pdf', [PostController::class, 'downloadPDF'])->name('posts.pdf');
+
+// Route resource tanpa array
+Route::resource('posts', PostController::class);
 require __DIR__ . '/auth.php';

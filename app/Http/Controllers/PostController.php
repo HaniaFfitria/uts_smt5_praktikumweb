@@ -6,6 +6,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PostController extends Controller
 {
@@ -14,7 +15,6 @@ class PostController extends Controller
         $posts = Post::paginate(10); // atau model Post lainnya
         return view('posts.index', compact('posts'));
     }
-
 
     public function create()
     {
@@ -48,7 +48,7 @@ Disimpan!']);
     }
     public function show(Post $post)
     {
-     
+
         return view('posts.show', compact('post'));
     }
     public function update(Request $request, Post $post)
@@ -93,5 +93,12 @@ Disimpan!']);
         return redirect()->route('posts.index')->with(['success' => 'Data Berhasil
 Dihapus!']);
     }
-  
+
+
+    public function downloadPDF()
+    {
+        $posts = Post::all(); // Fetch all posts (students)
+        $pdf = PDF::loadView('posts.pdf', compact('posts')); // Create PDF from the view
+        return $pdf->download('mahasiswa.pdf'); // Download the generated PDF
+    }
 }
